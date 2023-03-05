@@ -1,22 +1,6 @@
 <script setup lang="ts">
 
-enum Gender {
-  GIRL = 'Girl',
-  BOY = 'Boy',
-  UNISEX = 'Unisex',
-}
-
-enum Popularity {
-  TRENDY = 'Trendy',
-  UNIQUE = 'Unique',
-}
-
-enum Length {
-  LONG = 'Long',
-  ALL = 'All',
-  SHORT = 'Short',
-}
-
+import {Gender, Length, Popularity, names} from "~/data";
 
 interface OptionsState {
   gender: Gender;
@@ -29,6 +13,20 @@ const option = reactive<OptionsState>({
   popularity: Popularity.TRENDY,
   length: Length.ALL,
 }) // reactive для хранения состояния объекта
+
+const selectedNames = ref<string[]>([]) // ref для хранения состояния массива
+
+const computeSelectedNames = () => {
+  const filteredNames = names.filter(name => name.gender === option.gender)
+      .filter(name => name.popularity === option.popularity)
+      .filter(name => {
+        if (option.length === Length.ALL) return true
+        else return name.length === option.length
+      })
+
+  selectedNames.value = filteredNames.map(name => name.name)
+}
+
 </script>
 
 <template>
@@ -76,7 +74,9 @@ const option = reactive<OptionsState>({
           </button>
         </div>
       </div>
+      <button class="primary" @click="computeSelectedNames">Generate Name</button>
     </div>
+    {{ selectedNames }}
   </div>
 </template>
 
@@ -117,5 +117,16 @@ h1 {
 .option-active {
   background-color: rgb(27, 60, 138);
   color: rgb(255, 238, 236);
+}
+
+.primary {
+  background-color: rgb(27, 60, 138);
+  color: rgb(255, 238, 236);
+  border-radius: 6.5rem;
+  border: none;
+  padding: 0.75rem 4rem;
+  font-size: 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
 }
 </style>
