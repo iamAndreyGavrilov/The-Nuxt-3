@@ -1,3 +1,36 @@
+<script setup lang="ts">
+
+enum Gender {
+  GIRL = 'Girl',
+  BOY = 'Boy',
+  UNISEX = 'Unisex',
+}
+
+enum Popularity {
+  TRENDY = 'Trendy',
+  UNIQUE = 'Unique',
+}
+
+enum Length {
+  LONG = 'Long',
+  ALL = 'All',
+  SHORT = 'Short',
+}
+
+
+interface OptionsState {
+  gender: Gender;
+  popularity: Popularity;
+  length: Length;
+}
+
+const option = reactive<OptionsState>({
+  gender: Gender.GIRL,
+  popularity: Popularity.TRENDY,
+  length: Length.ALL,
+}) // reactive для хранения состояния объекта
+</script>
+
 <template>
   <div class="container">
     <h1>Random Baby Name Generator</h1>
@@ -6,24 +39,24 @@
       <div class="option-container">
         <h4>1) Choose gender </h4>
         <div class="option-buttons">
-          <button class="option">Man</button>
-          <button class="option">Unisex</button>
-          <button class="option">Girl</button>
+          <button class="option" :class="option.gender === Gender.BOY && 'option-active'">Boy</button>
+          <button class="option" :class="option.gender === Gender.UNISEX && 'option-active'">Unisex</button>
+          <button class="option" :class="option.gender === Gender.GIRL && 'option-active'">Girl</button>
         </div>
       </div>
       <div class="option-container">
         <h4>2) Choose the name popularity</h4>
         <div class="option-buttons">
-          <button class="option">Trendy</button>
-          <button class="option">Unique</button>
+          <button class="option" :class="option.popularity === Popularity.TRENDY && 'option-active'">Trendy</button>
+          <button class="option" :class="option.popularity === Popularity.UNIQUE && 'option-active'">Unique</button>
         </div>
       </div>
       <div class="option-container">
         <h4>3) Choose the name length</h4>
         <div class="option-buttons">
-          <button class="option">Long</button>
-          <button class="option">All</button>
-          <button class="option">Short</button>
+          <button class="option" :class="option.length === Length.LONG && 'option-active'">Long</button>
+          <button class="option" :class="option.length === Length.ALL && 'option-active'">All</button>
+          <button class="option" :class="option.length === Length.SHORT && 'option-active'">Short</button>
         </div>
       </div>
     </div>
@@ -62,5 +95,10 @@ h1 {
   font-size: 1rem;
   margin: 0.5rem;
   cursor: pointer;
+}
+
+.option-active {
+  background-color: rgb(27, 60, 138);
+  color: rgb(255, 238, 236);
 }
 </style>
