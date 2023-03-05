@@ -76,7 +76,12 @@ const computeSelectedNames = () => {
       </div>
       <button class="primary" @click="computeSelectedNames">Generate Name</button>
     </div>
-    {{ selectedNames }}
+    <div class="cards-container">
+      <div v-for="name in selectedNames" key="name" class="card">
+        <h4>{{ name }}</h4>
+        <p>x</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -128,5 +133,29 @@ h1 {
   font-size: 1rem;
   margin-top: 1rem;
   cursor: pointer;
+}
+
+.cards-container {
+  display: flex;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+}
+
+.card {
+  background-color: rgb(255, 238, 236);
+  border-radius: 2rem;
+  padding: 0.1rem;
+  width: 28%;
+  margin: 0 auto;
+  margin-top: 1rem;
+  position: relative;
+}
+
+.card p {
+  position: absolute;
+  top: 0;
+  left: 92.5%;
+  cursor: pointer;
+  color: black;
 }
 </style>
