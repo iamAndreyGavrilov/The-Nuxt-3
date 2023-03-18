@@ -1,8 +1,23 @@
 <template>
-  <div></div>
+  <div class="card">
+    <h2>{{ name }}</h2>
+    <p @click="removeName">x</p>
+  </div>
 </template>
 
-<script setup></script>
+<script setup lang="ts">
+interface NameProps {
+  name: string;
+  index: number;
+}
+
+const props = defineProps<NameProps>();
+const emit = defineEmits(['remove']);
+
+const removeName = () => {
+  emit('remove', props.index);
+};
+</script>
 
 <style scoped>
 .card {
@@ -18,9 +33,9 @@
 
 .card p {
   position: absolute;
-  top: -29%;
+  top: -10%;
   left: 92.5%;
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.178);
+  color: white;
 }
 </style>
